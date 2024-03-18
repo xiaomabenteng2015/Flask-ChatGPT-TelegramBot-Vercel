@@ -121,7 +121,7 @@ def reply_handler(filters, update):
         print("执行内联键盘设置")
         button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
         # update.message.reply_text(button.to_json())
-        update.message.reply_text("充值",reply_markup = button)
+        update.message.reply_text("充值",reply_markup = button.to_json())
         return
     print("收到消息===", message)
     update.message.reply_text("已收到：：" + message + "")
