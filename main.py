@@ -123,7 +123,7 @@ def reply_handler(filters, update):
         # update.message.reply_text(button.to_json())
         # update.message.reply_text("充值",reply_markup = button.to_json())
 
-        bot.callback_query.message.edit_text("充值",
+        filters.callback_query.message.edit_text("充值",
                                              reply_markup=InlineKeyboardMarkup(button))
         return
     print("收到消息===", message)
