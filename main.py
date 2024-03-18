@@ -116,6 +116,7 @@ inline_markup = InlineKeyboardMarkup(inline_keyboard)
 
 # 处理/start命令
 def start(update, context):
+    print("----------------start---------------------")
     context.bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
 
 # 处理普通键盘按钮
@@ -127,7 +128,7 @@ def button(update, context):
 def inline_button(update, context):
     query = update.callback_query
     query.answer()
-    query.edit_message_text(text="You pressed " + query.data)
+    query.edit_message_text(text="You pressed " + query.data, reply_markup= inline_markup)
 
 def reply_handler(filters, update):
     """Reply message."""
