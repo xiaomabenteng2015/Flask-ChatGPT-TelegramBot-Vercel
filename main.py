@@ -159,6 +159,7 @@ dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 dispatcher.add_handler(CallbackQueryHandler(despose_handler, pattern="gogogo"))
 # 注册处理函数
 updater.dispatcher.add_handler(CommandHandler('start', start))
+updater.dispatcher.add_handler(CommandHandler('menu', start))
 updater.dispatcher.add_handler(CallbackQueryHandler(inline_button))
 updater.dispatcher.add_handler(MessageHandler(telegram.ext.Filters.text, button))
 
