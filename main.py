@@ -90,7 +90,7 @@ app = Flask(__name__)
 
 # Initial bot by Telegram access token
 bot = telegram.Bot(token=telegram_bot_token)
-updater = Updater(token=telegram_bot_token, use_context=True)
+updater = Updater(token=telegram_bot_token, bot = bot)
 
 @app.route('/callback', methods=['POST'])
 def webhook_handler():
