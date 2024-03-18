@@ -90,7 +90,7 @@ app = Flask(__name__)
 
 # Initial bot by Telegram access token
 bot = telegram.Bot(token=telegram_bot_token)
-# updater = Updater(token=telegram_bot_token)
+updater = Updater(token=telegram_bot_token)
 
 @app.route('/callback', methods=['POST'])
 def webhook_handler():
@@ -115,9 +115,17 @@ inline_keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
 inline_markup = InlineKeyboardMarkup(inline_keyboard)
 
 # 处理/start命令
-def start(update, context):
+def start(bot, update):
     print("----------------start---------------------")
-    bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
+    # bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
+    update.message.reply_text('量化交易中心',
+                              reply_markup = InlineKeyboardMarkup([[
+                                  InlineKeyboardButton('恩哥Python量化教室',
+                                                       url = 'https://pixnashpython.pixnet.net/blog'),
+                                  InlineKeyboardButton('你的網路生活教授Nash',
+                                                       url = 'https://pixnashlife.pixnet.net/blog')
+                                  ]])
+                              )
 
 # 处理普通键盘按钮
 def button(update, context):
@@ -152,7 +160,8 @@ def despose_handler(query, context):
                                              reply_markup=InlineKeyboardMarkup(button))
 
 # New a dispatcher for bot
-dispatcher = Dispatcher(bot, None)
+# dispatcher = Dispatcher(bot, None)
+dispatcher = updater.dispatcher
 
 # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
 # message.
