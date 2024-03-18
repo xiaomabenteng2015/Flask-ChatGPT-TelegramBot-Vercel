@@ -5,12 +5,11 @@ import logging
 import telegram, os
 from flask import Flask, request
 from telegram.ext import Dispatcher, MessageHandler, Filters
+from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
 
-
-
-#################
 import openai
-	
+
+
 openai.api_key = os.getenv("OPENAI_API_KEY") 
 
 
@@ -96,8 +95,6 @@ app = Flask(__name__)
 # Initial bot by Telegram access token
 bot = telegram.Bot(token=telegram_bot_token)
 
-
-
 @app.route('/callback', methods=['POST'])
 def webhook_handler():
     """Set route /hook with POST method will trigger this method."""
@@ -109,16 +106,23 @@ def webhook_handler():
     return 'ok'
 
 
-def reply_handler(bot, update):
+def reply_handler(filters, update):
     """Reply message."""
     #text = update.message.text
     #update.message.reply_text(text)
-    chatgpt = ChatGPT()        
-    
-    chatgpt.prompt.add_msg(update.message.text) #人類的問題 the question humans asked
-    ai_reply_response = chatgpt.get_response() #ChatGPT產生的回答 the answers that ChatGPT gave
-    
-    update.message.reply_text(ai_reply_response) #用AI的文字回傳 reply the text that AI made
+    # chatgpt = ChatGPT()
+    #
+    # chatgpt.prompt.add_msg(update.message.text) #人類的問題 the question humans asked
+    # ai_reply_response = chatgpt.get_response() #ChatGPT產生的回答 the answers that ChatGPT gave
+    #
+    # update.message.reply_text(ai_reply_response) #用AI的文字回傳 reply the text that AI made
+    message = update.message.text
+    print("收到消息===", message)
+    update.message.reply_text("已收到：：" + message + "")
+    if "gogogo" in message:
+        print("执行内联键盘设置")
+        button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
+        update.message.reply_text(button.to_json())
 
 # New a dispatcher for bot
 dispatcher = Dispatcher(bot, None)
