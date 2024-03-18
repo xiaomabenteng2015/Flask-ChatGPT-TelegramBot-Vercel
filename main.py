@@ -4,7 +4,7 @@ import logging
 
 import telegram, os
 from flask import Flask, request
-from telegram.ext import Dispatcher, MessageHandler, Filters
+from telegram.ext import Dispatcher, MessageHandler, Filters, CallbackQueryHandler
 from telegram import InlineKeyboardButton,InlineKeyboardMarkup
 
 import openai
@@ -117,18 +117,15 @@ def reply_handler(filters, update):
     #
     # update.message.reply_text(ai_reply_response) #用AI的文字回傳 reply the text that AI made
     message = update.message.text
-    if "gogogo" in message:
-        print("执行内联键盘设置")
-        button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
-        # update.message.reply_text(button.to_json())
-        # update.message.reply_text("充值",reply_markup = button.to_json())
-
-        filters.callback_query.message.edit_text("充值",
-                                             reply_markup=InlineKeyboardMarkup(button))
-        return
     print("收到消息===", message)
     update.message.reply_text("已收到：：" + message + "")
 
+def despose_handler(query, context):
+    print("执行内联键盘设置")
+    button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
+
+    query.callback_query.message.edit_text("充值",
+                                             reply_markup=InlineKeyboardMarkup(button))
 
 # New a dispatcher for bot
 dispatcher = Dispatcher(bot, None)
@@ -136,6 +133,7 @@ dispatcher = Dispatcher(bot, None)
 # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
 # message.
 dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
+dispatcher.add_handler(CallbackQueryHandler(despose_handler, pattern="gogogo"))
 
 if __name__ == "__main__":
     # Running server
