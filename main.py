@@ -122,7 +122,9 @@ def reply_handler(filters, update):
     if "gogogo" in message:
         print("执行内联键盘设置")
         button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
-        update.message.reply_text(button.to_json())
+        # update.message.reply_text(button.to_json())
+        # update.message.reply_text(button.to_json())
+        bot.send_message(button.to_json())
 
 # New a dispatcher for bot
 dispatcher = Dispatcher(bot, None)
