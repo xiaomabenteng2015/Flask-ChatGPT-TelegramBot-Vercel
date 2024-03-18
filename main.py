@@ -120,9 +120,9 @@ def start(bot, update):
     # bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
     update.message.reply_text('量化交易中心',
                               reply_markup = InlineKeyboardMarkup([[
-                                  InlineKeyboardButton('恩哥Python量化教室',
+                                  InlineKeyboardButton('充值',
                                                        url = 'https://pixnashpython.pixnet.net/blog'),
-                                  InlineKeyboardButton('你的網路生活教授Nash',
+                                  InlineKeyboardButton('绑定钱包',
                                                        url = 'https://pixnashlife.pixnet.net/blog')
                                   ]])
                               )
