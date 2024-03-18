@@ -90,7 +90,7 @@ app = Flask(__name__)
 
 # Initial bot by Telegram access token
 bot = telegram.Bot(token=telegram_bot_token)
-updater = Updater(token=telegram_bot_token)
+# updater = Updater(token=telegram_bot_token)
 
 @app.route('/callback', methods=['POST'])
 def webhook_handler():
@@ -159,14 +159,14 @@ dispatcher = Dispatcher(bot, None)
 # dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 # dispatcher.add_handler(CallbackQueryHandler(despose_handler, pattern="gogogo"))
 # 注册处理函数
-updater.dispatcher.add_handler(CommandHandler('start', start))
-updater.dispatcher.add_handler(CommandHandler('menu', start))
-updater.dispatcher.add_handler(CallbackQueryHandler(inline_button))
-updater.dispatcher.add_handler(MessageHandler(telegram.ext.Filters.text, button))
+dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(CommandHandler('menu', start))
+dispatcher.add_handler(CallbackQueryHandler(inline_button))
+dispatcher.add_handler(MessageHandler(telegram.ext.Filters.text, button))
 
 if __name__ == "__main__":
     # Running server
     app.run(debug=True)
     # 启动Bot
-    updater.start_polling()
-    updater.idle()
+    # updater.start_polling()
+    # updater.idle()
