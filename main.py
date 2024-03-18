@@ -117,14 +117,16 @@ def reply_handler(filters, update):
     #
     # update.message.reply_text(ai_reply_response) #用AI的文字回傳 reply the text that AI made
     message = update.message.text
-    print("收到消息===", message)
-    update.message.reply_text("已收到：：" + message + "")
     if "gogogo" in message:
         print("执行内联键盘设置")
         button = InlineKeyboardButton(text="充值", callback_data="充值按钮被点击了")
         # update.message.reply_text(button.to_json())
         # update.message.reply_text(button.to_json())
         bot.send_message(button.to_json())
+        return
+    print("收到消息===", message)
+    update.message.reply_text("已收到：：" + message + "")
+
 
 # New a dispatcher for bot
 dispatcher = Dispatcher(bot, None)
