@@ -4,7 +4,7 @@ import logging
 
 import telegram, os
 from flask import Flask, request
-from telegram.ext import Dispatcher, MessageHandler, Filters, CallbackQueryHandler
+from telegram.ext import Dispatcher, MessageHandler, Filters, CallbackQueryHandler, Updater, CommandHandler
 from telegram import InlineKeyboardButton,InlineKeyboardMarkup
 
 import openai
@@ -70,10 +70,6 @@ class ChatGPT:
         self.prompt.add_msg(text)
 
 
-
-
-
-
 #####################
 
 telegram_bot_token = str(os.getenv("TELEGRAM_BOT_TOKEN"))
@@ -94,6 +90,7 @@ app = Flask(__name__)
 
 # Initial bot by Telegram access token
 bot = telegram.Bot(token=telegram_bot_token)
+updater = Updater(token=telegram_bot_token, use_context=True)
 
 @app.route('/callback', methods=['POST'])
 def webhook_handler():
@@ -105,6 +102,32 @@ def webhook_handler():
         dispatcher.process_update(update)
     return 'ok'
 
+# 定义键盘按钮
+keyboard = [['Option 1', 'Option 2'], ['Option 3', 'Option 4']]
+
+reply_markup = telegram.ReplyKeyboardMarkup(keyboard)
+
+# 定义内联键盘按钮
+inline_keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
+                    InlineKeyboardButton("Option 2", callback_data='2')],
+                   [InlineKeyboardButton("Option 3", callback_data='3'),
+                    InlineKeyboardButton("Option 4", callback_data='4')]]
+inline_markup = InlineKeyboardMarkup(inline_keyboard)
+
+# 处理/start命令
+def start(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
+
+# 处理普通键盘按钮
+def button(update, context):
+    query = update.message.text
+    context.bot.send_message(chat_id=update.effective_chat.id, text="You pressed " + query)
+
+# 处理内联键盘按钮
+def inline_button(update, context):
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(text="You pressed " + query.data)
 
 def reply_handler(filters, update):
     """Reply message."""
@@ -134,7 +157,14 @@ dispatcher = Dispatcher(bot, None)
 # message.
 dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 dispatcher.add_handler(CallbackQueryHandler(despose_handler, pattern="gogogo"))
+# 注册处理函数
+updater.dispatcher.add_handler(CommandHandler('start', start))
+updater.dispatcher.add_handler(CallbackQueryHandler(inline_button))
+updater.dispatcher.add_handler(MessageHandler(telegram.ext.Filters.text, button))
 
 if __name__ == "__main__":
     # Running server
     app.run(debug=True)
+    # 启动Bot
+    updater.start_polling()
+    updater.idle()
