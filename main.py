@@ -118,12 +118,12 @@ inline_markup = InlineKeyboardMarkup(inline_keyboard)
 def start(bot, update):
     print("----------------start---------------------")
     # bot.send_message(chat_id=update.effective_chat.id, text="Hello, I'm a bot!", reply_markup=reply_markup)
-    update.message.reply_text('量化交易中心',
+    update.message.reply_text('TG 机器人学习',
                               reply_markup = InlineKeyboardMarkup([[
                                   InlineKeyboardButton('充值',
-                                                       url = 'https://pixnashpython.pixnet.net/blog'),
+                                                       url = 'https://metamask.io/'),
                                   InlineKeyboardButton('绑定钱包',
-                                                       url = 'https://pixnashlife.pixnet.net/blog')
+                                                       url = 'https://www.baidu.com/')
                                   ]])
                               )
 
