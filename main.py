@@ -97,7 +97,7 @@ def webhook_handler():
     """Set route /hook with POST method will trigger this method."""
     if request.method == "POST":
         update = telegram.Update.de_json(request.get_json(force=True), bot)
-
+        print(update)
         # Update dispatcher process that handler to process this message
         dispatcher.process_update(update)
     return 'ok'
