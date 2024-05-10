@@ -123,7 +123,7 @@ def start(bot, update):
                                   InlineKeyboardButton('充值',
                                                        url = 'https://metamask.io/'),
                                   InlineKeyboardButton('授权登录',
-                                                       url = 'https://h5.omtrade.com/Scheme=start')
+                                                       url = 'https://tecode.github.io/dynamic_theme/document/index.html')
                                   ]])
                               )
 
