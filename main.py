@@ -122,8 +122,8 @@ def start(bot, update):
                               reply_markup = InlineKeyboardMarkup([[
                                   InlineKeyboardButton('充值',
                                                        url = 'https://metamask.io/'),
-                                  InlineKeyboardButton('绑定钱包',
-                                                       url = 'https://www.baidu.com/')
+                                  InlineKeyboardButton('授权登录',
+                                                       url = 'dynamictheme://login?name=flutter&token=1234567890')
                                   ]])
                               )
 
