@@ -123,7 +123,7 @@ def start(bot, update):
                                   InlineKeyboardButton('充值',
                                                        url = 'https://metamask.io/'),
                                   InlineKeyboardButton('授权登录',
-                                                       url = 'dynamictheme://login?name=flutter&token=1234567890')
+                                                       url = 'https://www.baidu.com/')
                                   ]])
                               )
 
